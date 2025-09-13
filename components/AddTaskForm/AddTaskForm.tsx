@@ -37,6 +37,13 @@ const categories = [
   "Тривога",
   "Дивні бажання",
   "Нудота",
+  "Радість",
+  "Хвилювання",
+  "Занепокоєння",
+  "Плаксивість",
+  "Щастя",
+  "Нетерпіння",
+  "Сум",
 ];
 
 const initialValues: FormValues = {
@@ -82,36 +89,29 @@ const AddTaskForm = ({ onCloseModal }: AddTaskFormProps) => {
               <label className={css.label} htmlFor="name">
                 Заголовок
               </label>
-              <Field className={css.input} id="name" type="text" name="name" />
+              <Field
+                className={css.input}
+                id="name"
+                type="text"
+                name="name"
+                placeholder="Введіть заголовок запису"
+              />
               <ErrorMessage name="name" component="div" className={css.error} />
             </div>
 
             <div className={css.formGroup}>
-              <label>Категорії</label>
+              <label className={css.label}>Категорії</label>
 
               <div
                 className={css.dropdown}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 {values.categories.length === 0 ? (
-                  <span className={css.placeholder}>Оберіть категорії</span>
+                  <span className={css.placeholder}>Оберіть категорію</span>
                 ) : (
                   values.categories.map((cat) => (
                     <span key={cat} className={css.tag}>
                       {cat}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          const newCategories = values.categories.filter(
-                            (c) => c !== cat
-                          );
-                          setFieldValue("categories", newCategories);
-                        }}
-                        className={css.removeTag}
-                      >
-                        ×
-                      </button>
                     </span>
                   ))
                 )}
@@ -123,6 +123,7 @@ const AddTaskForm = ({ onCloseModal }: AddTaskFormProps) => {
                   {categories.map((category) => (
                     <label key={category} className={css.checkboxLabel}>
                       <input
+                        className={css.checkbox}
                         type="checkbox"
                         checked={values.categories.includes(category)}
                         onChange={(e) => {
@@ -146,13 +147,16 @@ const AddTaskForm = ({ onCloseModal }: AddTaskFormProps) => {
             </div>
 
             <div className={css.formGroup}>
-              <label htmlFor="description">Запис</label>
+              <label className={css.label} htmlFor="description">
+                Запис
+              </label>
               <Field
                 as="textarea"
                 id="description"
                 name="description"
                 rows={8}
                 className={css.textarea}
+                placeholder="Запишіть, як ви себе відчуваєте"
               />
               <ErrorMessage
                 name="description"
@@ -163,18 +167,11 @@ const AddTaskForm = ({ onCloseModal }: AddTaskFormProps) => {
 
             <div className={css.actions}>
               <button
-                type="button"
-                className={css.cancelButton}
-                onClick={onCloseModal}
-              >
-                Cancel
-              </button>
-              <button
                 type="submit"
                 className={css.submitButton}
                 disabled={mutation.isPending}
               >
-                Create note
+                Зберегти
               </button>
             </div>
           </Form>

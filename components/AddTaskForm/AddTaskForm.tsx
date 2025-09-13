@@ -78,19 +78,22 @@ const AddTaskForm = ({ onCloseModal }: AddTaskFormProps) => {
 
   return (
     <>
+      <h1 className={css.title}>Новий запис</h1>
       <Formik
         validationSchema={ValidationSchema}
         initialValues={initialValues}
         onSubmit={handleSubmit}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, errors, touched }) => (
           <Form className={css.form}>
             <div className={css.formGroup}>
               <label className={css.label} htmlFor="name">
                 Заголовок
               </label>
               <Field
-                className={css.input}
+                className={`${css.input} ${
+                  errors.name && touched.name ? css.inputError : ""
+                }`}
                 id="name"
                 type="text"
                 name="name"
@@ -103,7 +106,11 @@ const AddTaskForm = ({ onCloseModal }: AddTaskFormProps) => {
               <label className={css.label}>Категорії</label>
 
               <div
-                className={css.dropdown}
+                className={`${css.dropdown} ${
+                  errors.categories && touched.categories
+                    ? css.dropdownError
+                    : ""
+                }  ${isDropdownOpen ? css.dropdownOpen : ""}`}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 {values.categories.length === 0 ? (
@@ -155,7 +162,11 @@ const AddTaskForm = ({ onCloseModal }: AddTaskFormProps) => {
                 id="description"
                 name="description"
                 rows={8}
-                className={css.textarea}
+                className={`${css.textarea} ${
+                  errors.description && touched.description
+                    ? css.textareaError
+                    : ""
+                }`}
                 placeholder="Запишіть, як ви себе відчуваєте"
               />
               <ErrorMessage

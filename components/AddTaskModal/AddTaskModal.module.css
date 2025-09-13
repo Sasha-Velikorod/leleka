@@ -17,6 +17,6 @@
   border-radius: 40px;
   padding: 48px 20px;
   width: 334px;
-  height: 657px;
+  min-height: 657px;
   max-width: 768px;
 }
